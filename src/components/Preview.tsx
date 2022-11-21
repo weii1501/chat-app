@@ -149,12 +149,12 @@ const Preview: React.FC<Props> = ({
   statusSocket.onmessage = function(evet) {
     const status = JSON.parse(evet.data)
     // setSocket(io('/'));
-    console.log(status.user)
+    // console.log(status.user)
     const userOnline = status.user.split(",")
     setUserOnline(userOnline)
     
   }
-  statusSocket.onclose = event => console.log("Disconnected")
+  // statusSocket.onclose = event => console.log("Disconnected")
 
   return (
     <div

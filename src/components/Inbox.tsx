@@ -101,29 +101,39 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
       setReceiverProfile(conversation)
       
 
-      conversation.messages.map((element: any, index: any, array: any) => {
-        // console.log(`${element.sender}: ${element.text}`)
-        // alert(1)
+      // conversation.messages.map((element: any, index: any, array: any) => {
+      //   // console.log(`${element.sender}: ${element.text}`)
+      //   // alert(1)
+
         
-        if (element.sender === username) {
-          setRealTimeMessage((prev) => [{ self: false, message: element.text, date_time: element.date_time }, ...prev]);
+        
+      //   if (element.sender === username) {
+      //     setRealTimeMessage((prev) => [{ self: false, message: element.text, date_time: element.date_time }, ...prev]);
+      //   } else {
+      //     setRealTimeMessage((prev) => [{ self: true, message: element.text, date_time: element.date_time }, ...prev]);
+      //   }
+      //   // return {
+      //   //   self: me,
+      //   //   message: element.text
+      //   // }
+      // })
+
+      for (let i = conversation.messages.length - 101; i < conversation.messages.length; i++) {
+        if (conversation.messages[i].sender === username){
+          setRealTimeMessage((prev) => [{ self: false, message: conversation.messages[i].text, date_time: conversation.messages[i].date_time }, ...prev]);
         } else {
-          setRealTimeMessage((prev) => [{ self: true, message: element.text, date_time: element.date_time }, ...prev]);
+          setRealTimeMessage((prev) => [{ self: true, message: conversation.messages[i].text, date_time: conversation.messages[i].date_time }, ...prev]);
         }
-        // return {
-        //   self: me,
-        //   message: element.text
-        // }
-      })
+      }
 
     },
   });
 
   chatSocket.onmessage = function(e) {
-    console.log(e.data);
+    // console.log(e.data);
     const status = JSON.parse(e.data).status
     if (status === "new_call") {
-      console.log(status)
+      // console.log(status)
       window.open(`http://localhost:3000/answercall/${JSON.parse(e.data).message.data.sender}`)
     }
     const data = JSON.parse(e.data).text
@@ -366,7 +376,7 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
                 };
                 axios.post(`http://localhost:8000/chat-app/message/`, datalog, config)
                   .then((response) => {
-                    console.log('doroi')
+                    // console.log('doroi')
                   })
                 // const send = () => sendMessageWs(username, message)
                 const date = new Date()
@@ -438,7 +448,7 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
                 };
                 axios.post(`http://localhost:8000/chat-app/message/`, datalog, config)
                   .then((response) => {
-                    console.log('doroi')
+                    // console.log('doroi')
                   })
 
                 const date = new Date();

@@ -16,11 +16,13 @@ import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutline
 // import MapsUgcOutlinedIcon from '@material-ui/icons-material/MapsUgcOutlined';
 import { Avatar, Dropdown } from "flowbite-react";
 import { getAllUsers, setAvatar, deleteUser } from "../api";
+import { useNavigate } from "react-router-dom";
 
 
 import "./Header.css"
 
 const Header: React.FC = () => {
+  const navigate = useNavigate()
   const { user, userLogout, isSuccess, refetch, isAlert, setIsAlert } =
     useContext<any>(userContext);
 
@@ -110,6 +112,9 @@ const Header: React.FC = () => {
       }),
   });
 
+  const handleUsers = () => {
+    navigate('/users')
+  }
 
   return (
     <>
@@ -170,8 +175,8 @@ const Header: React.FC = () => {
                         </span>
                       </Dropdown.Header>
 
-                      <Dropdown.Item onClick={() => searchRef.current.focus()}>
-                        New Message
+                      <Dropdown.Item onClick={handleUsers}>
+                        See all friend
                       </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item onClick={() => setIsAvatarModalOpen(true)}>

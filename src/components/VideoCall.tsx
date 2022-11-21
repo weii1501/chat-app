@@ -88,7 +88,7 @@ const VideoCall: React.FC = () => {
       
       MyPeer.on("open", (id: any) => {
         setPeerId(id)
-        console.log(callusername, 2)
+        // console.log(callusername, 2)
         navigator.mediaDevices 
           .getUserMedia({
             video: true,
@@ -97,13 +97,13 @@ const VideoCall: React.FC = () => {
           .then((stream: any) => {
             
             const call = MyPeer.call(callusername, stream);
-            console.log(stream)
+            // console.log(stream)
             // myVideo.muted = true;
             addVideoStream(myVideo, stream);
             if (call) {
               call.on("stream", (remoteStream: any) => {
                 addVideoStream(currentVideoCall, remoteStream);
-                console.log(remoteStream);
+                // console.log(remoteStream);
                 
               });
             }
@@ -113,7 +113,7 @@ const VideoCall: React.FC = () => {
   }, [MyPeer]);
 
   useEffect(() => {
-    console.log(peerId)
+    // console.log(peerId)
     if (peerId != '') {
       let data = {
         receiver: callusername,
@@ -121,7 +121,7 @@ const VideoCall: React.FC = () => {
         peer_id: peerId
       }
 
-      console.log(data)
+      // console.log(data)
 
       const token = localStorage.getItem('token')
 
@@ -133,9 +133,9 @@ const VideoCall: React.FC = () => {
       };
 
       axios.post('http://localhost:8000/chat-app/start-call/', data, config).then(response => {
-        console.log(response)
+        // console.log(response)
       }).catch(error => {
-        console.log(error.response)
+        // console.log(error.response)
       })
 
       const socket = new WebSocket(`ws://localhost:8000/ws/message/${peerId}/`)
@@ -146,7 +146,7 @@ const VideoCall: React.FC = () => {
             setisEndCall(false)
             break
         }
-        console.log(message)
+        // console.log(message)
       }
 
       
@@ -161,7 +161,7 @@ const VideoCall: React.FC = () => {
       peer_id: peerId
     }
 
-    console.log(data)
+    // console.log(data)
 
     const token = localStorage.getItem('token')
 
@@ -173,9 +173,9 @@ const VideoCall: React.FC = () => {
     };
 
     axios.post('http://localhost:8000/chat-app/end-call/', data, config).then(response => {
-      console.log(response)
+      // console.log(response)
     }).catch(error => {
-      console.log(error.response)
+      // console.log(error.response)
     })
   }
 

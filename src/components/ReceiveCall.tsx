@@ -46,7 +46,7 @@ const AnswerCall: React.FC = () => {
       setcurrentUser(JSON.parse(localStorage.getItem("user")||""));
     }
     chatSocket.onmessage = function(e) {
-      console.log(JSON.parse(e.data))
+      // console.log(JSON.parse(e.data))
     }
   }, []);
 
@@ -63,7 +63,7 @@ const AnswerCall: React.FC = () => {
   }, [currentUser]);
 
   chatSocket.onmessage = function(e) {
-    console.log(JSON.parse(e.data))
+    // console.log(JSON.parse(e.data))
   }
 
   useEffect(() => {

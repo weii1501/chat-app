@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Peer } from "peerjs";
 import { chatSocket, test } from "../ws/ws";
 import axios from "../axios";
+import { callbackify } from "node:util";
 
 
 
@@ -21,22 +22,25 @@ const AnswerCall: React.FC = () => {
   const currentVideoCall =
     document.getElementsByClassName("currentVideoCall")[0];
   const takeCall = document.getElementsByClassName("takeCall")[0];
-  const socket = useRef();
+ 
+  const [status, setStatus] = useState<string>('Calling...') 
   let { answerusername } = useParams();
   
 
   function addVideoStream(video: any, stream: any) {
-    if (video) {
-      video.srcObject = stream;
-      video.addEventListener("loadedmetadata", () => {
-        video.play();
-      });
-    }
+    video.srcObject = stream;
+    video.addEventListener("loadedmetadata", () => {
+      video.play();
+    });
   }
-
   const handleEndCall = () => {
     endCall();
-    // window.close();
+    setisTakeCall(false)
+    
+    setStatus('End call')
+    setTimeout(() => {
+      window.close();
+    }, 1000);
   };
 
   useEffect(() => {
@@ -54,7 +58,7 @@ const AnswerCall: React.FC = () => {
     if (currentUser) {
       setMyPeer(
         new Peer(JSON.parse(localStorage.getItem('user')||'').username, {
-            host: "my-chat-app-incv.herokuapp.com",
+            host: "0.peerjs.com",
             port: 443,
             secure: true,
         })
@@ -67,39 +71,41 @@ const AnswerCall: React.FC = () => {
   }
 
   useEffect(() => {
-    const socket = new WebSocket(`ws://localhost:8000/ws/message/${answerusername}/`)
+    const socket = new WebSocket(`wss://192.168.137.233:8000/ws/message/${answerusername}/`)
       socket.onmessage = (event) => {
         let message = JSON.parse(event.data);
         switch (message.status) {
           case 'end_call':
-            setisEndCall(false)
-            window.close();
+            
+            handleEndCall()
             break
         }
         console.log(message)
       }
-  })
+  },[])
 
   if (MyPeer) {
     MyPeer.on("open", (id: any) => {
-      console.log(id);
       MyPeer.on("call", (call: any) => {
+        console.log(call)
         takeCall.addEventListener("click", () => {
           setisTakeCall(true);
-          console.log(call)
-          navigator.mediaDevices
+          navigator.mediaDevices 
             .getUserMedia({
               video: true,
               audio: true,
             })
             .then((stream) => {
-              addVideoStream(myVideo, stream);
               console.log(stream)
+              addVideoStream(myVideo, stream);
             //   myVideo.muted = true;
-              call.answer(stream);
-              call.on("stream", (remoteStream: any) => {
-                addVideoStream(currentVideoCall, remoteStream);
+              console.log(stream)
+              call.answer(stream)
+              
+              call.on('stream', function(remoteStream: any) {
+                console.log('remote stream: ')
                 console.log(remoteStream)
+                addVideoStream(currentVideoCall, remoteStream);
               });
             });
         });
@@ -121,11 +127,12 @@ const AnswerCall: React.FC = () => {
     const config = {
       headers: { 
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        
       }
     };
 
-    axios.post('http://localhost:8000/chat-app/end-call/', data, config).then(response => {
+    axios.post('  http://localhost:8000/chat-app/end-call/', data, config).then(response => {
       console.log(response)
     }).catch(error => {
       console.log(error.response)
@@ -149,8 +156,8 @@ const AnswerCall: React.FC = () => {
       </div>
       <div className="videocall-content">
         <video className="myVideo"></video>
-        <video className="currentVideoCall"></video>
-        {!isTakeCall && <h3>Calling...</h3>}
+        <video className="currentVideoCall" ></video>
+        {!isTakeCall && <h3>{status}</h3>}
       </div>
       <div className="videocall-action">
         {isTakeCall ? (

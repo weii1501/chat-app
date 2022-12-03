@@ -12,9 +12,20 @@ const Userlist : React.FC = () => {
     
     const [users, setUsers] = useState([])
     const negative = useNavigate();
+    // useEffect(() => {
+        
+    //     axios.get("https://636e7c27bb9cf402c8031091.mockapi.io/userlist/userlist")
+    //     .then(res => setUsers(res.data)) 
+        
+    // },[])
+
     useEffect(() => {
-        axios.get("https://636e7c27bb9cf402c8031091.mockapi.io/userlist/userlist")
-        .then(res => setUsers(res.data)) 
+        const token = localStorage.getItem('token')
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        axios.get("http://localhost:8000/chat-app/location/", config)
+        .then(res => setUsers(res.data))
         
     },[])
 
@@ -118,14 +129,16 @@ const Userlist : React.FC = () => {
                                                 </div>
                                             </td>
                                             <td className="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
-                                                <img className="h-10 w-10 rounded-full" src={el.avt} alt={`${el.name} avatar`}/>
+                                                {/* <img className="h-10 w-10 rounded-full" src={el.avt} alt={`${el.name} avatar`}/> */}
+                                                <img className="h-10 w-10 rounded-full" src={''} alt={`${el.name} avatar`}/>
                                                 <div className="text-sm font-normal text-gray-500">
                                                     <div className="text-base font-semibold text-gray-900">{el.name}</div>
                                                     
                                                 </div>
                                             </td>
-                                            <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">{el.location}</td>
-                                            <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">{el.distance}km</td>
+                                            {/* <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">{el.location}</td> */}
+                                            <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">{''}</td>
+                                            <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">{Math.round(el.distance)}km</td>
                                             <td className="p-4 whitespace-nowrap text-base font-normal text-gray-900">
                                                 <div className="flex items-center">
                                                     <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2 ml-2">  </div>  

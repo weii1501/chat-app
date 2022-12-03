@@ -15,11 +15,10 @@ import axios from 'axios';
 import { resourceLimits } from 'worker_threads';
 import { relative } from 'path';
 import { response } from 'express';
-
+import { useRef } from 'react';
+import { parse } from 'node:path/posix';
 
 // import { w3cwebsocket as W3CWebSocket } from 'websocket';
-
-
 interface Props {
   inboxToggle: boolean;
   setInboxToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -53,6 +52,11 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
   const [message, setMessage] = useState<string>('');
 
   const [receiverProfile, setReceiverProfile] = useState<any>(undefined)
+
+  const myRef = React.useRef<HTMLDivElement>(null);
+
+  const [scrollTop, setScrollTop] = useState(undefined)
+
 
   // const chatSocket = () => chatSocketVar()
 
@@ -134,7 +138,7 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
     const status = JSON.parse(e.data).status
     if (status === "new_call") {
       // console.log(status)
-      window.open(`http://localhost:3000/answercall/${JSON.parse(e.data).message.data.sender}`)
+      window.open(`https://localhost:8000:3000/answercall/${JSON.parse(e.data).message.data.sender}`)
     }
     const data = JSON.parse(e.data).text
     // setSocket(io('/'));
@@ -163,7 +167,7 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
   //   // const bodyParameters = {
   //   //   key: "value"
   //   // };
-  //   const res = await axios.get(`http://localhost:8000/chat-app/users/`, config);
+  //   const res = await axios.get(`  http://localhost:8000/chat-app/users/`, config);
 
   //   const result = res.data.filter(function (el: any) {
   //     return el.username === username 
@@ -283,7 +287,17 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
       </div>
 
       
-      <div className='w-full basis-3/4 flex flex-col-reverse px-6 overflow-scroll overflow-x-hidden'>
+      <div 
+        className='w-full basis-3/4 flex flex-col-reverse px-6 overflow-scroll overflow-x-hidden'
+        onScroll={(e) => {
+          const scrollY = window.scrollY //Don't get confused by what's scrolling - It's not the window
+          const scrollTop = myRef.current?.scrollTop
+          // const offsetTop = myRef.current?
+          
+          
+        }}
+        ref = {myRef}
+      >
         
         {isMessageFetching ? (
           <Spinner color='pink' aria-label='Pink spinner example' size={'xl'} />
@@ -291,7 +305,7 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
           realTimeMessage.length ? (
             realTimeMessage &&
             realTimeMessage.map((element: any, index: number) => (
-              <div className='w-full flex flex-col' key={index}>
+              <div className='w-full flex flex-col' key={index} id={index === 0 ? 'position' : ''}  >
                 <div className={`items-end mt-3 ${!element.self ? 'flex' : 'hidden'}`}>
                   <div className='mr-2'>
                     <Avatar
@@ -372,9 +386,10 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
                   headers: { 
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
+                    
                   }
                 };
-                axios.post(`http://localhost:8000/chat-app/message/`, datalog, config)
+                axios.post(`  http://localhost:8000/chat-app/message/`, datalog, config)
                   .then((response) => {
                     // console.log('doroi')
                   })
@@ -443,10 +458,10 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
                 const config = {
                   headers: { 
                     'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',                  
                   }
                 };
-                axios.post(`http://localhost:8000/chat-app/message/`, datalog, config)
+                axios.post(`  http://localhost:8000/chat-app/message/`, datalog, config)
                   .then((response) => {
                     // console.log('doroi')
                   })

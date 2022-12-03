@@ -19,6 +19,7 @@ import { getAllUsers, setAvatar, deleteUser } from "../api";
 import { useNavigate } from "react-router-dom";
 
 
+
 import "./Header.css"
 
 const Header: React.FC = () => {
@@ -36,6 +37,8 @@ const Header: React.FC = () => {
   const [avatarSelectIndex, setAvatarSelectIndex] = useState<number>(NaN);
 
   const searchRef = useRef() as any;
+
+  const [avtForm, setAvtForm] = useState<boolean>(false)
 
   const {
     data: allUsers,
@@ -118,6 +121,7 @@ const Header: React.FC = () => {
 
   return (
     <>
+
         <div className="app__header">
           <div className="img-logo">
 
@@ -179,7 +183,11 @@ const Header: React.FC = () => {
                         See all friend
                       </Dropdown.Item>
                       <Dropdown.Divider />
-                      <Dropdown.Item onClick={() => setIsAvatarModalOpen(true)}>
+                      <Dropdown.Item 
+                        onClick={() => {
+                          setAvtForm(true)
+                        }}
+                      >
                         Pick an Avatar
                       </Dropdown.Item>
                       <Dropdown.Divider />
@@ -187,7 +195,11 @@ const Header: React.FC = () => {
                         Delete Account
                       </Dropdown.Item>
                       <Dropdown.Divider />
-                      <Dropdown.Item onClick={userLogout}>Sign out</Dropdown.Item>
+                      <Dropdown.Item onClick={() => {
+                        const token = ''
+                        localStorage.setItem('token', token)
+                        navigate("/signup")
+                      }}>Sign out</Dropdown.Item>
                     </ul>
                 </div>
               </div>

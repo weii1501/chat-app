@@ -12,7 +12,7 @@ const VideoCall: React.FC = () => {
   const [currentUser, setcurrentUser] = useState<any>(undefined);
   const [isEndCall, setisEndCall] = useState<boolean>(false);
   const [MyPeer, setMyPeer] = useState<any>(undefined);
-  const [peerId, setPeerId] = useState<string>('');
+  const [peerId, setPeerId] = useState<any>(undefined);
   const negative = useNavigate();
   let { callusername } = useParams();
   const myVideo = document.getElementsByClassName("myVideo")[0];
@@ -29,7 +29,9 @@ const VideoCall: React.FC = () => {
 
   const handleEndCall = () => {
     endCall();
-    window.close();
+    setTimeout(() => {
+      window.close();
+    }, 1000);
   };
 
   useEffect(() => {
@@ -42,16 +44,18 @@ const VideoCall: React.FC = () => {
 
   useEffect(() => {
     if (currentUser) {
-      console.log(JSON.parse(localStorage.getItem('user')||'').username, 1)
+      // console.log(JSON.parse(localStorage.getItem('user')||'').username, 1)
       setMyPeer(
         new Peer(JSON.parse(localStorage.getItem('user')||'').username, {
-          host: "my-chat-app-incv.herokuapp.com",
-          port: 443,
-          secure: true,
+            host: "0.peerjs.com",
+            port: 443,
+            secure: true,
         })
       );
       
+     
 
+      
       
       // socket = io('')
 
@@ -74,20 +78,25 @@ const VideoCall: React.FC = () => {
       // MyPeer.on("open", (id: any) => {
       //   setPeerId(id)
       // })
-
+      
       // MyPeer.on('connection', function(conn: any) {
       //   conn.on('data', function(data: any){
       //     // Will print 'hi!'
       //     console.log(data);
       //   });
       // });
+      console.log(MyPeer);
 
       // MyPeer.on('error', (data: any) => {
       //   console.log('peer errors')
       // })
-      
       MyPeer.on("open", (id: any) => {
+        
         setPeerId(id)
+        
+
+        console.log(peerId)
+        
         // console.log(callusername, 2)
         navigator.mediaDevices 
           .getUserMedia({
@@ -109,12 +118,13 @@ const VideoCall: React.FC = () => {
             }
           });
       });
+      
     }
   }, [MyPeer]);
 
   useEffect(() => {
     // console.log(peerId)
-    if (peerId != '') {
+    if (peerId) {
       let data = {
         receiver: callusername,
         sender: JSON.parse(localStorage.getItem("user")||"").username,
@@ -128,17 +138,18 @@ const VideoCall: React.FC = () => {
       const config = {
         headers: { 
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          
         }
-      };
+      }
 
-      axios.post('http://localhost:8000/chat-app/start-call/', data, config).then(response => {
-        // console.log(response)
+      axios.post('  http://localhost:8000/chat-app/start-call/', data, config).then(response => {
+        console.log(response)
       }).catch(error => {
         // console.log(error.response)
       })
 
-      const socket = new WebSocket(`ws://localhost:8000/ws/message/${peerId}/`)
+      const socket = new WebSocket(`wss://192.168.137.233:8000/ws/message/${peerId}/`)
       socket.onmessage = (event) => {
         let message = JSON.parse(event.data);
         switch (message.status) {
@@ -168,11 +179,12 @@ const VideoCall: React.FC = () => {
     const config = {
       headers: { 
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        
       }
     };
 
-    axios.post('http://localhost:8000/chat-app/end-call/', data, config).then(response => {
+    axios.post('  http://localhost:8000/chat-app/end-call/', data, config).then(response => {
       // console.log(response)
     }).catch(error => {
       // console.log(error.response)

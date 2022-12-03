@@ -37,7 +37,10 @@ function VideoCall() {
 
     const startcall = () => {
         const config = {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}`,
+            
+          
+          }
         };
         
         let sender = JSON.parse(localStorage.getItem('user')||'').username
@@ -49,7 +52,7 @@ function VideoCall() {
         // console.log(callusername)
         // console.log(data)
 
-        axios.post('http://localhost:8000/chat-app/start-call/', data, config).then(response => {
+        axios.post('  http://localhost:8000/chat-app/start-call/', data, config).then(response => {
         // console.log(response)
         }).catch(error => {
         // console.log(error.response)
@@ -57,7 +60,7 @@ function VideoCall() {
     }
 
     const initializeWebSocket = (peer_id) => {
-        const socket = new WebSocket(`ws://localhost:8000/ws/message/${peer_id}`)
+        const socket = new WebSocket(`wss://192.168.137.233:8000/ws/message/${peer_id}`)
         socket.onmessage = (event) => {
             let message = JSON.parse(event.data);
             switch (message.status) {

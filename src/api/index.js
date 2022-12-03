@@ -11,8 +11,12 @@ export const signup = async (data) => {
 };
 
 export const login = async (data) => {
+  
+
+
   const res = await axios.post("http://localhost:8000/chat-app/login/", data);
   localStorage.setItem('user',JSON.stringify(res.data.user))
+  
   return res.data;
 };
 
@@ -21,13 +25,15 @@ export const getAllUsers = async (id) => {
   const token = localStorage.getItem('token')
 
   const config = {
-    headers: { Authorization: `Bearer ${token}` }
+    headers: { Authorization: `Bearer ${token}`,
+    
+  }
   };
 
   // const bodyParameters = {
   //   key: "value"
   // };
-  const res = await axios.get(`http://localhost:8000/chat-app/users/`, config);
+  const res = await axios.get(`  http://localhost:8000/chat-app/users/`, config);
   
   
 
@@ -52,16 +58,18 @@ export const sendMessage = async (data) => {
   //   headers: { Authorization: `Bearer ${token}` }
   // };
   const username = localStorage.getItem('user').username
-  const res = await axios.post(`http://localhost:8000/chat-app/ws/message/${username}`, data);
+  const res = await axios.post(`  http://localhost:8000/chat-app/ws/message/${username}`, data);
   return res.data;
 };
 
 export const getMessage = async (data) => {
-  // const res = await axios.get("http://localhost:8000/chat-app/users/", data);
+  // const res = await axios.get("  http://localhost:8000/chat-app/users/", data);
   const token = localStorage.getItem('token')
 
   const config = {
-    headers: { Authorization: `Bearer ${token}` }
+    headers: { Authorization: `Bearer ${token}` ,
+    
+  }
   };
 
   // const bodyParameters = {

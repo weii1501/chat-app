@@ -53,13 +53,13 @@ const Preview: React.FC<Props> = ({
     const user = allUsers.find((el: any) => el.username === username)
     if (user) {
       if (user.messages.length === 0) {
-        return false
+        return true
       }
       else {
         return true
       }
     } else {
-      return false
+      return true
     }
   }
   

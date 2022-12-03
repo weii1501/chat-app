@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 
 const Profile : React.FC = () => {
-    const user = {
+    const user1 = {
         name: 'Võ Đắc Lực',
         avt: 'https://scontent.fsgn4-1.fna.fbcdn.net/v/t39.30808-6/314657475_2215137945336436_1796223546990780693_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=zJBtA2agvisAX_wfMfL&_nc_ht=scontent.fsgn4-1.fna&oh=00_AfDf1drS_nTB8hb77HGM84Y4wNPzxNegbXS7ZnpLA0BzNw&oe=637F8502',
         cover: 'https://scontent.fsgn3-1.fna.fbcdn.net/v/t39.30808-6/315093257_2217312918452272_2951054123476202727_n.jpg?stp=dst-jpg_p960x960&_nc_cat=104&ccb=1-7&_nc_sid=e3f864&_nc_ohc=K87oE-wkwIEAX-fvOYP&_nc_ht=scontent.fsgn3-1.fna&oh=00_AfC695nOrqqqaifQjEzu30BhSjsgzxH9quxNJinmXV5exA&oe=63801DFA',
@@ -15,14 +16,30 @@ const Profile : React.FC = () => {
         id: 1,
     }
 
+    const [user, setUser] = useState<any>(undefined)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        axios.get('http://localhost:8000/chat-app/profile/?format=json', config)
+            .then((res) => {
+                setUser(res.data[0])
+            })
+    },[])
+    
+    console.log(user)
+    
+
     return (
         <div>
-            <div className='h-screen overflow-hidden flex items-center justify-center' style={{background: "#f1f5f9"}}>
+            {user ? (<div className='h-screen overflow-hidden flex items-center justify-center' style={{background: "#f1f5f9"}}>
                 <main className="profile-page">
                     <section className="relative block h-500-px">
                         <div 
                             className="absolute top-0 w-full h-full bg-center bg-cover" 
-                            style={{backgroundImage: `url(${user.cover})`}}     
+                            style={{backgroundImage: `url(${user1.cover})`}}     
                         >
                         <span id="blackOverlay" className="w-full h-full absolute opacity-50 bg-black"></span>
                         </div>
@@ -48,8 +65,8 @@ const Profile : React.FC = () => {
                                 <div className="relative">
                                     <img 
                                         alt="..." 
-                                        src={user.avt}
-                                        className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
+                                        src={user.photo}
+                                        className="shadow-xl rounded-full h-158 w-158 align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                                     />
                                 </div>
                                 </div>
@@ -61,7 +78,7 @@ const Profile : React.FC = () => {
                                         float: 'right',
                                     }}
                                     >
-                                    {user.marital}
+                                    {user.relationship}
                                     </div>
                                 </div>
                                 </div>
@@ -88,12 +105,12 @@ const Profile : React.FC = () => {
                                 {user.location}
                                 </div>
                                 <div className="mb-2 text-blueGray-600 mt-10">
-                                <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
-                                {user.career}
+                                <i className="fas fa-phone mr-2 text-lg text-blueGray-400"></i>
+                                {user.phone_number}
                                 </div>
                                 <div className="mb-2 text-blueGray-600">
                                 <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>
-                                {user.workplace}
+                                {user1.workplace}
                                 </div>
                             </div>
                             <div className="mt-10 py-10 border-t border-blueGray-200 text-center" style={{width: '1450px'}}>
@@ -111,7 +128,7 @@ const Profile : React.FC = () => {
                         </div>
                     </section>
                 </main>
-            </div>
+            </div>) : ('')}
         </div>
     )
 }

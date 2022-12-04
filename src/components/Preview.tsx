@@ -368,7 +368,7 @@ const Preview: React.FC<Props> = ({
                           {element.username}
                         </div>
                         <div className="text-sm text-gray-500 truncate">
-                          {element.messages[element.messages.length - 1].text}
+                          {element.messages.length >=1 ? element.messages[element.messages.length - 1].text : 'No messages'}
                         </div>
                       </div>
                     </Avatar>

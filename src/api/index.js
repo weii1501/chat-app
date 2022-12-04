@@ -25,9 +25,9 @@ export const getAllUsers = async (id) => {
   const token = localStorage.getItem('token')
 
   const config = {
-    headers: { Authorization: `Bearer ${token}`,
-    
-  }
+      headers: { Authorization: `Bearer ${token}`,
+      
+    }
   };
 
   // const bodyParameters = {

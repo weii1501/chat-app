@@ -1,5 +1,5 @@
 import React from 'react'
-import ImageUploader from "react-images-upload";
+// import ImageUploader from "react-images-upload";
 import Header from "../components/Header"
 
 
@@ -21,15 +21,17 @@ const ChangeInfor: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-10 sm:mt-0 relative  w-4/5 top-20  left-20 bg-[#96b6c8] rounded-lg z-50">
+        <div className="mt-10 sm:mt-0 relative  w-4/5 top-20  left-20 bg-[#96b6c8] rounded-lg z-30">
           <div className="md:grid md:grid-cols-3 md:gap-6">
-            <div className="md:col-span-1 flex flex-col justify-between items-center h-full">
-              <img 
-                  className='justify-between align-center m-auto'
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Google_Chat_logo_%282017-2020%29.svg/2560px-Google_Chat_logo_%282017-2020%29.svg.png" 
-                  alt="" 
-                  style={{width: "350px"}}
-              />
+            <div className="md:col-span-1 flex flex-col justify-between items-center h-full"
+              style={{
+                backgroundImage: 'url("/image/logo2.png")',
+                backgroundSize: '100%',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+              }}
+            >
+
             </div>
             <div className="mt-5 md:col-span-2 md:mt-0">
               <form action="#" method="POST">

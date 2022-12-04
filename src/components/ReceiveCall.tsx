@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { MdCallEnd } from "react-icons/md";
 // import { BsFillCameraVideoOffFill } from "react-icons/bs";
@@ -6,7 +6,7 @@ import { IoMdCall } from "react-icons/io";
 // import { IoMdMicOff } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 import { Peer } from "peerjs";
-import { chatSocket, test } from "../ws/ws";
+import { chatSocket } from "../ws/ws";
 import axios from "../axios";
 // import { callbackify } from "node:util";
 

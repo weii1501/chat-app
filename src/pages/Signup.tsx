@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { FaFacebook } from "react-icons/fa";
+// import { FaFacebook } from "react-icons/fa";
 import SignupForm from "../components/SignupForm";
 import LoginForm from "../components/LoginForm";
 import userContext from "../utils/userContext";
@@ -10,7 +10,7 @@ import { login, signup } from "../api";
 
 import { AiTwotoneMail } from "react-icons/ai";
 import axios from "axios";
-import { useAlert } from "react-alert";
+// import { useAlert } from "react-alert";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,16 +25,16 @@ const Signup: React.FC = () => {
 
   const [email, setEmail] = useState<string>('')
 
-  const option = {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-  }
+  // const option = {
+  //   position: "top-right",
+  //   autoClose: 5000,
+  //   hideProgressBar: false,
+  //   closeOnClick: true,
+  //   pauseOnHover: true,
+  //   draggable: true,
+  //   progress: undefined,
+  //   theme: "light",
+  // }
 
 
   interface signup {
@@ -63,7 +63,6 @@ const Signup: React.FC = () => {
 
   const redirection = (token: string) => {
     localStorage.setItem("token", token);
-    refetch();
     navigate("/");
   };
 
@@ -75,7 +74,11 @@ const Signup: React.FC = () => {
         title: res.message,
         type: "success",
       });
-      redirection(res.token);
+      localStorage.setItem("token", res.token);
+      navigate("/");
+
+      window.location.reload();
+      // redirection(res.token);
       
     },
     onError: (err: any) =>
@@ -157,15 +160,23 @@ const Signup: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen w-screen flex font-sans items-center justify-center text-black bg-white">
+    <div className="min-h-screen w-screen flex font-sans items-center justify-center text-black bg-[#f1f5f9]">
       <ToastContainer/>
       <OpenNotification />
      
-      <div className="md:w-[60rem] w-full md:h-[35rem] h-screen flex flex-col md:flex-row justify-between rounded-lg drop-shadow-lg shadow-lg">
-        <div className="md:w-5/12 w-full md:h-full h-46 md:flex items-center justify-center bg-[#96b6c8] md:rounded-l-lg md:rounded-tr-none">
-          <div className="md:h-40 h-32 flex flex-col justify-between items-center">
+      <div className="md:w-[60rem] w-full md:h-[40rem] h-screen flex flex-col md:flex-row justify-between rounded-lg drop-shadow-lg shadow-lg bg-white">
+        <div className="md:w-5/12 w-full md:h-full h-46 md:flex items-center justify-center bg-[#96b6c8] md:rounded-l-lg md:rounded-tr-none"
+          style={{
+            backgroundImage: 'url("/image/logo2.png")',
+            backgroundSize: '100%',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="md:h-40 h-32 flex flex-col justify-between items-center m-0"
+            >
             <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Google_Chat_logo_%282017-2020%29.svg/2560px-Google_Chat_logo_%282017-2020%29.svg.png" 
+              src="" 
               alt="" 
               style={{width: "350px"}}
             />

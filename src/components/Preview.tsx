@@ -9,6 +9,8 @@ import { chatSocket } from "../ws/ws";
 import { getAllUsers, setAvatar, deleteUser } from "../api";
 import userContext from "../utils/userContext";
 import { statusSocket } from "../ws/ws"
+import Header from "./Header"
+
 
 
 
@@ -157,6 +159,7 @@ const Preview: React.FC<Props> = ({
   // statusSocket.onclose = event => console.log("Disconnected")
 
   return (
+    
     <div
       className={`${
         inboxToggle ? "hidden" : "flex"

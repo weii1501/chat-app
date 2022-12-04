@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 // import { CiLocationOn } from "react-icons/ci"
 import axios from 'axios';
 // import { getDefaultNormalizer } from '@testing-library/react';
+import Header from './Header';
 
 import "../css/main.css"
 
@@ -12,12 +13,64 @@ const Userlist : React.FC = () => {
     
     const [users, setUsers] = useState([])
     const negative = useNavigate();
-    // useEffect(() => {
-        
-    //     axios.get("https://636e7c27bb9cf402c8031091.mockapi.io/userlist/userlist")
-    //     .then(res => setUsers(res.data)) 
-        
-    // },[])
+    const [data, setData] = useState<any>(undefined)
+    
+    // ------------------------------------------------------------------------------------------
+    const [Users1, setUsers1] = useState<any>(undefined)
+    const [local, setLocal] = useState<any>(undefined)
+    const [latitude, setLatitude] = useState(undefined)
+    const [longitude, setLongitude] = useState(undefined)
+
+    const showPosition = (position: any) => {
+        console.log(position.coords.latitude,  position.coords.longitude)
+        setLatitude(position.coords.latitude.toString())
+        setLongitude(position.coords.longitude.toString())
+    }
+
+    const alertPermission = () => {
+        alert('Bạn phải bật vị trí')
+    }
+
+    useEffect(() => {
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, alertPermission);
+        } else {
+        console.log('error')
+        }
+    }, [])
+
+    useEffect(() => {
+        (async () => {
+            const res = await axios.get(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=vi`)
+            setLocal(res.data)
+        })()
+    }, [])
+
+    if (local) {
+        console.log(local.localityInfo.administrative)
+        var location = local.localityInfo.administrative
+        const diachi = location.map((el: any) => {
+        return el.name.toString()
+        })
+
+        const uniqueArray = diachi.filter(function(item: any, pos:any) {
+        return diachi.indexOf(item) == pos;
+        })
+
+
+        var name = uniqueArray.reverse().join(', ')
+        console.log(name)
+    }
+
+
+
+
+
+    console.log(Users1);
+
+//   ============================================================
+
+
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -35,10 +88,11 @@ const Userlist : React.FC = () => {
     
     return (
         <>
+            <Header/>
             <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
                 <div className="mb-1 w-full">
                     <div className="mb-4">
-                        <nav className="flex mb-5" aria-label="Breadcrumb">
+                        {/* <nav className="flex mb-5" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-2">
                             <li 
                                 className="inline-flex items-center" 
@@ -54,8 +108,15 @@ const Userlist : React.FC = () => {
 
                            
                             </ol>
-                        </nav>
-                        <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">All users</h1>
+                        </nav> */}
+                        <h1 
+                            className="text-xl sm:text-2xl font-semibold text-gray-900"
+                            style={{
+                                marginTop: '80px'
+                            }}
+                        >
+                            All users
+                        </h1>
                     </div>
                     <div className="sm:flex">
                         <div className="hidden sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">

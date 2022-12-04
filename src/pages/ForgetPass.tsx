@@ -6,9 +6,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-interface Props {
-    
-}
 
 const ForgetPass: React.FC = () => {
     const [password, setPassword] = useState<String>('')
@@ -17,22 +14,20 @@ const ForgetPass: React.FC = () => {
     return (
         <>
             <ToastContainer/>
-            <div className="min-h-screen w-screen flex font-sans items-center justify-center text-black bg-white">
+            <div className="min-h-screen w-screen flex font-sans items-center justify-center text-black bg-[#f1f5f9]">
                 
-                <div className="md:w-[60rem] w-full md:h-[35rem] h-screen flex flex-col md:flex-row justify-between rounded-lg drop-shadow-lg shadow-lg">
-                    <div className="md:w-5/12 w-full md:h-full h-auto md:flex items-center justify-center bg-[#96b6c8] md:rounded-l-lg md:rounded-tr-none">
+                <div className="md:w-[60rem] w-full md:h-[35rem] h-screen flex flex-col md:flex-row justify-between rounded-lg drop-shadow-lg shadow-lg bg-white">
+                    <div className="md:w-5/12 w-full md:h-full h-auto md:flex items-center justify-center bg-[#96b6c8] md:rounded-l-lg md:rounded-tr-none"
+                        style={{
+                            backgroundImage: 'url("/image/logo2.png")',
+                            backgroundSize: '100%',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundPosition: 'center',
+                        }}
+                    >
                     <div className="md:h-40 h-32 flex flex-col justify-between items-center">
-                        <img 
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Google_Chat_logo_%282017-2020%29.svg/2560px-Google_Chat_logo_%282017-2020%29.svg.png" 
-                        alt="" 
-                        style={{width: "350px"}}
-                        />
-                        <p className="font-dev text-[#FF6A3D] md:text-[14rem] text-9xl md:leading-3">
                         
-                        </p>
-                        <p className="md:block hidden text-lg text-white text-center">
-
-                        </p>
+                        
                     </div>
                     </div>
 
@@ -49,14 +44,13 @@ const ForgetPass: React.FC = () => {
 
                         <div className="relative z-0 w-full mb-6 group">
                             <input
-                                type="text"
+                                type="password"
                                 name="last_name"
                                 id="floating_password"
                                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                 placeholder=" "
                                 onChange={(e) => {
                                     setPassword(e.target.value)
-                                    
                                 }}
                                 required
                             />
@@ -73,9 +67,7 @@ const ForgetPass: React.FC = () => {
                     <div
                         className="rounded-md border border-[#1A2238] px-5 py-2 hover:bg-[#1A2238] hover:text-white trainsition-all duration-300 cursor-pointer"
                         onClick={() => {
-                            const data = {
-                                
-                            }
+                            
                             console.log(tokens.token)
                             axios.post(`  http://localhost:8000/api/password_reset/confirm/`,{
                                 token: tokens.token,

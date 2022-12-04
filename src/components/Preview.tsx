@@ -1,15 +1,15 @@
 import React, { useContext, useRef, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Types } from "mongoose";
-import { Avatar, Button, Dropdown, Modal, Spinner } from "flowbite-react";
-import moment from "moment";
+import { Avatar, Button, Modal, Spinner } from "flowbite-react";
+// import moment from "moment";
 import { Buffer } from "buffer";
 import axios from "axios";
-import { chatSocket } from "../ws/ws"; 
+// import { chatSocket } from "../ws/ws"; 
 import { getAllUsers, setAvatar, deleteUser } from "../api";
 import userContext from "../utils/userContext";
 import { statusSocket } from "../ws/ws"
-import Header from "./Header"
+// import Header from "./Header"
 
 
 
@@ -22,6 +22,8 @@ interface Props {
 
 }
 
+
+
 const Preview: React.FC<Props> = ({
   inboxToggle,
   setInboxToggle,
@@ -33,6 +35,8 @@ const Preview: React.FC<Props> = ({
 
   const searchRef = useRef() as any;
 
+  // const set = true
+
   const [isDeleteUserModalOpen, setIsDeleteUserModalOpen] =
     useState<boolean>(false);
 
@@ -42,6 +46,8 @@ const Preview: React.FC<Props> = ({
 
   const [avatarSelectIndex, setAvatarSelectIndex] = useState<number>(NaN);
 
+  const [focus, setFocus] = useState<boolean>(false)
+
   // const token = localStorage.getItem('token')
 
   // const chatSocket1 = chatSocket
@@ -49,6 +55,8 @@ const Preview: React.FC<Props> = ({
   // const [status, setStatus] = useState<string>('')
 
   const [userOnline, setUserOnline] = useState<string[]>([])
+
+  const [date, setDate] = useState<string[]>([])
 
 
   const checkStranger = (username: any, allUsers: any) => {
@@ -95,6 +103,7 @@ const Preview: React.FC<Props> = ({
     // queryKey: ["getAvatar"],
     refetchOnWindowFocus: false,
   });
+  
 
   const handleSetAvatar = useMutation(
     ({ id, imgUrl }: { id: string | Types.ObjectId; imgUrl: string }) =>
@@ -157,6 +166,16 @@ const Preview: React.FC<Props> = ({
     
   }
   // statusSocket.onclose = event => console.log("Disconnected")
+
+  const handleDate = (date: string) => {
+    return new Date(date).toLocaleTimeString()
+  }
+
+  // console.log(allUsers[0].messages[0].date_time)
+ 
+
+  
+  console.log(date)
 
   return (
     
@@ -323,12 +342,14 @@ const Preview: React.FC<Props> = ({
                 checkStranger(element.username, allUsers) && (
 
                   <div
-                    className="w-full flex justify-between items-start px-3 my-1 py-3 cursor-pointer rounded-lg hover:bg-gray-50"
+
+                    className={focus ? (`w-full flex justify-between items-start px-3 my-1 py-3 cursor-pointer rounded-lg hover:bg-gray-50 bg-gray-50`) : (`w-full flex justify-between items-start px-3 my-1 py-3 cursor-pointer rounded-lg hover:bg-gray-50`)}
                     key={index}
-                    onClick={(): void => {
+                    onClick={(e): void => {
                       setInboxToggle(true);
                       setUsername(element.username);
-                      
+                      setFocus(!focus)
+                      console.log(e)
                     }}
 
                   >
@@ -343,17 +364,24 @@ const Preview: React.FC<Props> = ({
                     >
                       <div className="space-y-1 font-medium w-40">
                         <div className="truncate">{element.fullname}</div>
-                        <div className="text-sm text-gray-500 truncate">
+                        <div className="text-sm text-dark-600 truncate ">
                           {element.username}
                         </div>
                         <div className="text-sm text-gray-500 truncate">
-                          {userOnline.includes(element.username) ? "online" : "offline"}
+                          {element.messages[element.messages.length - 1].text}
                         </div>
                       </div>
                     </Avatar>
                     <div className="text-gray-500 text-xs py-1">
-                      {moment(element.createdAt).format("ll").slice(0, -6)}
+                      {/* {moment(element.createdAt).format("ll").slice(0, -6)} */}
+                      {userOnline.includes(element.username) ? "online" : "offline"}
+                      <br />
+                      <div className="mt-3">
+                          Last mess
+                      </div>
                     </div>
+                    <br />
+                    
                   </div>
                 )
               ))}

@@ -291,11 +291,14 @@ const Header: React.FC = () => {
                 backgroundColor: '#fff',
                 width: "208px",
                 float: "right",
-                position: "absolute",
+                position: "fixed",
+                zIndex: "999",
                 inset: "0px auto auto 0px",
                 marginLeft: 'auto',
                 marginRight: '0',
-                transform: "translate(calc(1483px), 60px)"
+                top: '62px',
+                right: '20px',
+                // transform: "translate(calc(1483px), 60px)"
               }}
               data-popper-placement="bottom"
             >

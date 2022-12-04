@@ -173,7 +173,7 @@ const Preview: React.FC<Props> = ({
 
   // console.log(allUsers[0].messages[0].date_time)
  
-
+  const username = JSON.parse(localStorage.getItem('user')||'').username
   
   console.log(date)
 
@@ -348,7 +348,7 @@ const Preview: React.FC<Props> = ({
                     onClick={(e): void => {
                       setInboxToggle(true);
                       setUsername(element.username);
-                      setFocus(!focus)
+                      // setFocus(!focus)
                       console.log(e)
                     }}
 
@@ -377,7 +377,7 @@ const Preview: React.FC<Props> = ({
                       {userOnline.includes(element.username) ? "online" : "offline"}
                       <br />
                       <div className="mt-3">
-                          Last mess
+                        {element.messages.length >=1 ? ((element.messages[element.messages.length - 1].sender === username) ? ('me') : (element.username)) : ('')}
                       </div>
                     </div>
                     <br />

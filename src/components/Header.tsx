@@ -320,6 +320,9 @@ const Header: React.FC = () => {
                   <a href="/changeimg" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Set avatar</a>
                 </li>
                 <li>
+                  <a href="/changepass" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Change password</a>
+                </li>
+                <li>
                   <a 
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     onClick={handleLogout}

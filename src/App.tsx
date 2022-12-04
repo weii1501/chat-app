@@ -11,6 +11,7 @@ import ChangeImg from "./pages/ChangeImg";
 // import { AnswerCall } from "./call";
 import ChangeInfor from "./pages/ChangeInfor";
 import ForgetPass from "./pages/ForgetPass";
+import ChangePass from "./pages/ChangePass";
 
 
 const App: React.FC = () => {
@@ -34,6 +35,7 @@ const App: React.FC = () => {
           <Route path="/changeimg" element={<ChangeImg />}/>
           <Route path="/changeinfor" element={<ChangeInfor />}/>
           <Route path="/api/password_reset/:token" element={<ForgetPass />}/>
+          <Route path="/changepass" element={<ChangePass />}/>
           
       </Routes>
     </UserAuth>

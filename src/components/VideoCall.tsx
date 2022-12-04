@@ -6,6 +6,7 @@ import { MdCallEnd } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import { Peer } from "peerjs";
 import axios from "../axios";
+import { chatSocket } from "../ws/ws";
 
 
 const VideoCall: React.FC = () => {
@@ -149,21 +150,27 @@ const VideoCall: React.FC = () => {
         // console.log(error.response)
       })
 
-      const socket = new WebSocket(`wss://192.168.137.233:8000/ws/message/${peerId}/`)
-      socket.onmessage = (event) => {
-        let message = JSON.parse(event.data);
-        switch (message.status) {
-          case 'end_call':
-            setisEndCall(false)
-            break
-        }
-        // console.log(message)
-      }
+      
 
       
 
     }
   }, [peerId])
+
+  const socket = new WebSocket(`ws://localhost:8000/ws/message/${peerId}/`)
+  console.log(peerId)
+  socket.onmessage = (event) => {
+    console.log(event)
+    let message = JSON.parse(event.data);
+    console.log(message)
+    switch (message.status) {
+      case 'end_call':
+        handleEndCall()
+        // setisEndCall(false)
+        break
+    }
+    // console.log(message)
+  }
 
   const endCall = () => {
     let data = {
@@ -184,7 +191,7 @@ const VideoCall: React.FC = () => {
       }
     };
 
-    axios.post('  http://localhost:8000/chat-app/end-call/', data, config).then(response => {
+    axios.post('http://localhost:8000/chat-app/end-call/', data, config).then(response => {
       // console.log(response)
     }).catch(error => {
       // console.log(error.response)

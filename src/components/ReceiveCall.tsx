@@ -49,9 +49,6 @@ const AnswerCall: React.FC = () => {
     } else {
       setcurrentUser(JSON.parse(localStorage.getItem("user")||""));
     }
-    chatSocket.onmessage = function(e) {
-      // console.log(JSON.parse(e.data))
-    }
   }, []);
 
   useEffect(() => {
@@ -70,19 +67,19 @@ const AnswerCall: React.FC = () => {
   //   // console.log(JSON.parse(e.data))
   // }
 
-  useEffect(() => {
-    const socket = new WebSocket(`wss://192.168.137.233:8000/ws/message/${answerusername}/`)
-      socket.onmessage = (event) => {
-        let message = JSON.parse(event.data);
-        switch (message.status) {
-          case 'end_call':
-            
-            handleEndCall()
-            break
-        }
-        console.log(message)
-      }
-  },[])
+  
+  const socket = new WebSocket(`ws://localhost:8000/ws/message/${answerusername}/`)
+  socket.onmessage = (event) => {
+    let message = JSON.parse(event.data);
+    switch (message.status) {
+      case 'end_call':
+        
+        handleEndCall()
+        break
+    }
+    console.log(message)
+  }
+  
 
   if (MyPeer) {
     MyPeer.on("open", (id: any) => {

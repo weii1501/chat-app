@@ -136,6 +136,7 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
   chatSocket.onmessage = function(e) {
     // console.log(e.data);
     const status = JSON.parse(e.data).status
+    
     if (status === "new_call") {
       // console.log(status)
       window.open(`https://localhost:3000/answercall/${JSON.parse(e.data).message.data.sender}`)

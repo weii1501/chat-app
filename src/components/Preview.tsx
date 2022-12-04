@@ -10,6 +10,7 @@ import { getAllUsers, setAvatar, deleteUser } from "../api";
 import userContext from "../utils/userContext";
 import { statusSocket } from "../ws/ws"
 // import Header from "./Header"
+import { chatSocket } from "../ws/ws"
 
 
 
@@ -59,6 +60,7 @@ const Preview: React.FC<Props> = ({
   const [date, setDate] = useState<string[]>([])
 
 
+  
   const checkStranger = (username: any, allUsers: any) => {
     const user = allUsers.find((el: any) => el.username === username)
     if (user) {
@@ -166,6 +168,19 @@ const Preview: React.FC<Props> = ({
     
   }
   // statusSocket.onclose = event => console.log("Disconnected")
+
+  // chatSocket.onmessage = function(e) {
+  //   const res = JSON.parse(e.data).text
+  //   // setSocket(io('/'));
+  //   const data = res.split(":")
+  //   const sender = data[0]
+  //   const message = data[1]
+  //   console.log(message)
+  //   const username_mess = document.getElementsByClassName(`${sender}-mess`)[0]
+  //   // username_mess.innerText = message
+  //   console.log(username_mess.innerHTML)
+  //   username_mess.innerHTML = message
+  // }
 
   const handleDate = (date: string) => {
     return new Date(date).toLocaleTimeString()
@@ -367,7 +382,7 @@ const Preview: React.FC<Props> = ({
                         <div className="text-sm text-dark-600 truncate ">
                           {element.username}
                         </div>
-                        <div className="text-sm text-gray-500 truncate">
+                        <div className={`text-sm text-gray-500 truncate ${element.username}-mess`}>
                           {element.messages.length >=1 ? element.messages[element.messages.length - 1].text : 'No messages'}
                         </div>
                       </div>

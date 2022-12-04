@@ -21,7 +21,7 @@ const Signup: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const [isLoginToggled, setIsLoginToggled] = useState<boolean>(false);
+  const [isLoginToggled, setIsLoginToggled] = useState<boolean>(true);
 
   const [email, setEmail] = useState<string>('')
 
@@ -42,6 +42,7 @@ const Signup: React.FC = () => {
     first_name: string;
     last_name: string;
     password: string;
+    email: string;
   }
 
   interface login {
@@ -54,6 +55,7 @@ const Signup: React.FC = () => {
     last_name: "",
     username: "",
     password: "",
+    email: "",
   });
 
   const [loginInfo, setLoginInfo] = useState<login>({

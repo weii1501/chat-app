@@ -25,9 +25,27 @@ const UserAuth: React.FC<{ children: React.ReactNode }> = ({
     isSuccess,
     isFetching,
   } = useQuery({
-    queryFn: () => auth(),
+    // queryFn: () => auth(),
     queryKey: ["authorization"],
   });
+
+  const user1 = {
+    name: 'ha',
+    username: 'ha',
+    // email: string;
+    online: false,
+    // fullname: string;
+    status: 'ssf',
+    photo: 'fffs',
+    // updatedAt: string;
+    messages: [{
+        text: 's',
+        sender: 'hi',
+        date_time: Date,
+        read: true,
+    }]
+  }
+  
 
   const userLogout = (): void => {
     localStorage.removeItem("token");
@@ -38,7 +56,7 @@ const UserAuth: React.FC<{ children: React.ReactNode }> = ({
   return (
     <UserContext.Provider
       value={{
-        user,
+        // user,
         refetch,
         userLogout,
         isSuccess,

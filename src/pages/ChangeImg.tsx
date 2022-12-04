@@ -1,5 +1,6 @@
 import React from 'react'
 import ImageUploader from "react-images-upload";
+import Header from "../components/Header"
 
 
 
@@ -10,7 +11,8 @@ const ChangeImg: React.FC = () => {
 
     return (
         <>
-            <div className='fixed  w-4/5 top-20  left-20 bg-[#96b6c8] rounded-lg z-50' >
+            <Header/>
+            <div className='relative  w-4/5 top-20  left-20 bg-[#96b6c8] rounded-lg z-50' >
                 <div className="md:grid md:grid-cols-3 md:gap-6">
                     <div className="md:col-span-1 flex flex-col justify-between items-center h-full">
                         <img 

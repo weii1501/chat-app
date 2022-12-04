@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { MdCallEnd } from "react-icons/md";
-import { BsFillCameraVideoOffFill } from "react-icons/bs";
-import { IoMdMicOff } from "react-icons/io";
+// import { BsFillCameraVideoOffFill } from "react-icons/bs";
+// import { IoMdMicOff } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 import { Peer } from "peerjs";
 import axios from "../axios";

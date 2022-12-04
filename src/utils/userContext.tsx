@@ -1,19 +1,19 @@
-import { Types } from "mongoose";
+// import { Types } from "mongoose";
 import React, { createContext } from "react";
 
 interface context {
-  user: {
-    // _id: string | Types.ObjectId;
-    name: string;
-    username: string;
-    // email: string;
-    online: boolean;
-    // fullname: string;
-    status: string
-    photo: string;
-    // updatedAt: string;
-    messages: { text: string, sender: string, date_time: Date,read: boolean }[]
-  };
+  // user: {
+  //   // _id: string | Types.ObjectId;
+  //   name: string;
+  //   username: string;
+  //   // email: string;
+  //   online: boolean;
+  //   // fullname: string;
+  //   status: string
+  //   photo: string;
+  //   // updatedAt: string;
+  //   messages: { text: string, sender: string, date_time: Date,read: boolean }[]
+  // };
   refetch: any;
   isSuccess: boolean;
   isFetching: boolean;

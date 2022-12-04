@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import { Avatar, Dropdown, Spinner } from 'flowbite-react';
 import { IoIosArrowBack, IoIosCall, IoMdSend } from 'react-icons/io';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { BsEmojiHeartEyesFill } from 'react-icons/bs';
 import userContext from '../utils/userContext';
-import { getAllUsers, getMessage, getUserById, sendMessage } from '../api';
+import { getAllUsers, sendMessage } from '../api';
 import emojiArr from './emoji';
-import { chatSocket, test } from "../ws/ws";
-import { log } from 'console';
+import { chatSocket } from "../ws/ws";
+// import { log } from 'console';
 import axios from 'axios';
-import { resourceLimits } from 'worker_threads';
-import { relative } from 'path';
-import { response } from 'express';
-import { useRef } from 'react';
-import { parse } from 'node:path/posix';
+// import { resourceLimits } from 'worker_threads';
+// import { relative } from 'path';
+// import { response } from 'express';
+// import { useRef } from 'react';
+// import { parse } from 'node:path/posix';
 
 // import { w3cwebsocket as W3CWebSocket } from 'websocket';
 interface Props {
@@ -39,11 +39,11 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
 
   const [socket, setSocket] = useState<any>(null);
 
-  const [data, setData] = useState<any>(undefined)
+  // const [data, setData] = useState<any>(undefined)
 
-  const { user } = useContext<any>(userContext);
+  // const { user } = useContext<any>(userContext);
 
-  const [me, setMe] = useState<boolean>(false)
+  // const [me, setMe] = useState<boolean>(false)
 
   const [realTimeMessage, setRealTimeMessage] = useState<{ self: boolean; message: string; date_time: string }[]>([]);
 
@@ -55,7 +55,7 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
 
   const myRef = React.useRef<HTMLDivElement>(null);
 
-  const [scrollTop, setScrollTop] = useState(undefined)
+  // const [scrollTop, setScrollTop] = useState(undefined)
 
 
   // const chatSocket = () => chatSocketVar()
@@ -105,30 +105,30 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
       setReceiverProfile(conversation)
       
 
-      // conversation.messages.map((element: any, index: any, array: any) => {
-      //   // console.log(`${element.sender}: ${element.text}`)
-      //   // alert(1)
+      conversation.messages.map((element: any, index: any, array: any) => {
+        // console.log(`${element.sender}: ${element.text}`)
+        // alert(1)
 
         
         
-      //   if (element.sender === username) {
-      //     setRealTimeMessage((prev) => [{ self: false, message: element.text, date_time: element.date_time }, ...prev]);
-      //   } else {
-      //     setRealTimeMessage((prev) => [{ self: true, message: element.text, date_time: element.date_time }, ...prev]);
-      //   }
-      //   // return {
-      //   //   self: me,
-      //   //   message: element.text
-      //   // }
-      // })
-
-      for (let i = conversation.messages.length - 101; i < conversation.messages.length; i++) {
-        if (conversation.messages[i].sender === username){
-          setRealTimeMessage((prev) => [{ self: false, message: conversation.messages[i].text, date_time: conversation.messages[i].date_time }, ...prev]);
+        if (element.sender === username) {
+          setRealTimeMessage((prev) => [{ self: false, message: element.text, date_time: element.date_time }, ...prev]);
         } else {
-          setRealTimeMessage((prev) => [{ self: true, message: conversation.messages[i].text, date_time: conversation.messages[i].date_time }, ...prev]);
+          setRealTimeMessage((prev) => [{ self: true, message: element.text, date_time: element.date_time }, ...prev]);
         }
-      }
+        // return {
+        //   self: me,
+        //   message: element.text
+        // }
+      })
+
+      // for (let i = conversation.messages.length - 101; i < conversation.messages.length; i++) {
+      //   if (conversation.messages[i].sender === username){
+      //     setRealTimeMessage((prev) => [{ self: false, message: conversation.messages[i].text, date_time: conversation.messages[i].date_time }, ...prev]);
+      //   } else {
+      //     setRealTimeMessage((prev) => [{ self: true, message: conversation.messages[i].text, date_time: conversation.messages[i].date_time }, ...prev]);
+      //   }
+      // }
 
     },
   });
@@ -138,7 +138,7 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
     const status = JSON.parse(e.data).status
     if (status === "new_call") {
       // console.log(status)
-      window.open(`https://localhost:8000:3000/answercall/${JSON.parse(e.data).message.data.sender}`)
+      window.open(`https://localhost:3000/answercall/${JSON.parse(e.data).message.data.sender}`)
     }
     const data = JSON.parse(e.data).text
     // setSocket(io('/'));
@@ -290,9 +290,9 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
       <div 
         className='w-full basis-3/4 flex flex-col-reverse px-6 overflow-scroll overflow-x-hidden'
         onScroll={(e) => {
-          const scrollY = window.scrollY //Don't get confused by what's scrolling - It's not the window
-          const scrollTop = myRef.current?.scrollTop
-          // const offsetTop = myRef.current?
+          // const scrollY = window.scrollY //Don't get confused by what's scrolling - It's not the window
+          // const scrollTop = myRef.current?.scrollTop
+          // // const offsetTop = myRef.current?
           
           
         }}
@@ -347,7 +347,8 @@ const Inbox: React.FC<Props> = ({ inboxToggle, setInboxToggle, username }) => {
             <div style={{
               width: '100%',
               height: '100%',
-              backgroundImage: 'url("https://cdn.dribbble.com/users/2333097/screenshots/8574268/media/c024e71216d2ce5d8dd97c81781d573b.gif")',
+              // backgroundImage: 'url("https://cdn.dribbble.com/users/2333097/screenshots/8574268/media/c024e71216d2ce5d8dd97c81781d573b.gif")',
+              backgroundImage: 'url("/image/inbox.gif")',
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'center',

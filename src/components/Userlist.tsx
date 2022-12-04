@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { GiPathDistance } from "react-icons/gi";
-import { CiLocationOn } from "react-icons/ci"
+// import { GiPathDistance } from "react-icons/gi";
+// import { CiLocationOn } from "react-icons/ci"
 import axios from 'axios';
-import { getDefaultNormalizer } from '@testing-library/react';
+// import { getDefaultNormalizer } from '@testing-library/react';
 
 import "../css/main.css"
 

@@ -40,11 +40,11 @@ const Preview: React.FC<Props> = ({
 
   const [avatarSelectIndex, setAvatarSelectIndex] = useState<number>(NaN);
 
-  const token = localStorage.getItem('token')
+  // const token = localStorage.getItem('token')
 
-  const chatSocket1 = chatSocket
+  // const chatSocket1 = chatSocket
 
-  const [status, setStatus] = useState<string>('')
+  // const [status, setStatus] = useState<string>('')
 
   const [userOnline, setUserOnline] = useState<string[]>([])
 
@@ -90,7 +90,7 @@ const Preview: React.FC<Props> = ({
       }
       setAvatarImage(imageData);
     },
-    queryKey: ["getAvatar"],
+    // queryKey: ["getAvatar"],
     refetchOnWindowFocus: false,
   });
 

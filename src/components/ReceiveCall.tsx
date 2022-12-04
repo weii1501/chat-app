@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { MdCallEnd } from "react-icons/md";
-import { BsFillCameraVideoOffFill } from "react-icons/bs";
+// import { BsFillCameraVideoOffFill } from "react-icons/bs";
 import { IoMdCall } from "react-icons/io";
-import { IoMdMicOff } from "react-icons/io";
+// import { IoMdMicOff } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 import { Peer } from "peerjs";
 import { chatSocket, test } from "../ws/ws";
 import axios from "../axios";
-import { callbackify } from "node:util";
+// import { callbackify } from "node:util";
 
 
 
@@ -66,9 +66,9 @@ const AnswerCall: React.FC = () => {
     }
   }, [currentUser]);
 
-  chatSocket.onmessage = function(e) {
-    // console.log(JSON.parse(e.data))
-  }
+  // chatSocket.onmessage = function(e) {
+  //   // console.log(JSON.parse(e.data))
+  // }
 
   useEffect(() => {
     const socket = new WebSocket(`wss://192.168.137.233:8000/ws/message/${answerusername}/`)

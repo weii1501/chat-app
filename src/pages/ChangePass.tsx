@@ -12,9 +12,9 @@ interface Props {
 
 const ChangePass: React.FC<Props> = () => {
 
-    const [password, setPassword] = useState<String>('')
+    const [oldPassword, setOldPassword] = useState<String>('')
+    const [newPassword, setNewPassword] = useState<String>('')
     const navigate = useNavigate();
-    let tokens  = useParams()
 
     return (
         <>
@@ -56,7 +56,7 @@ const ChangePass: React.FC<Props> = () => {
                                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                 placeholder=" "
                                 onChange={(e) => {
-                                    
+                                    setOldPassword(e.target.value)
                                 }}
                                 required
                             />
@@ -70,12 +70,12 @@ const ChangePass: React.FC<Props> = () => {
                         <div className="relative z-0 w-full mb-6 group">
                             <input
                                 type="password"
-                                name="old_password"
+                                name="new_password"
                                 id="floating_password"
                                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                 placeholder=" "
                                 onChange={(e) => {
-                                    
+                                    setNewPassword(e.target.value)
                                 }}
                                 required
                             />
@@ -93,14 +93,37 @@ const ChangePass: React.FC<Props> = () => {
                         className="rounded-md border border-[#1A2238] px-5 py-2 hover:bg-[#1A2238] hover:text-white trainsition-all duration-300 cursor-pointer"
                         onClick={() => {
                             
-                            console.log(tokens.token)
-                            axios.post(`  http://localhost:8000/api/password_reset/confirm/`,{
-                                token: tokens.token,
-                                password: password
-                            })
+                            const token = localStorage.getItem('token')
+
+                            const config = {
+                                headers: { Authorization: `Bearer ${token}`,
+                                
+                                }
+                            };
+                            axios.put(`http://localhost:8000/chat-app/change-password/`,{
+                                old_password: oldPassword,
+                                new_password: newPassword
+                            },config)
                                 .then((res) => {
-                                    if (res.data.status==='OK') {
-                                        const message = 'Reset password successfully!'
+                                    // if (res.data.status==='OK') {
+                                    //     const message = 'Reset password successfully!'
+                                    //     toast.success(message, {
+                                    //         position: "top-right",
+                                    //         autoClose: 2000,
+                                    //         hideProgressBar: false,
+                                    //         closeOnClick: true,
+                                    //         pauseOnHover: true,
+                                    //         draggable: true,
+                                    //         progress: undefined,
+                                    //         theme: "light",
+                                    //     });
+                                    //     setTimeout(function() {
+                                    //         navigate('/signup')
+                                    //     },2000)
+                                    // }
+                                    console.log(res)
+                                    if (res.data.status === 'success') {
+                                        const message = res.data.message
                                         toast.success(message, {
                                             position: "top-right",
                                             autoClose: 2000,
@@ -112,9 +135,23 @@ const ChangePass: React.FC<Props> = () => {
                                             theme: "light",
                                         });
                                         setTimeout(function() {
-                                            navigate('/signup')
+                                            navigate('/')
                                         },2000)
                                     }
+                                })
+                                .catch((err) => {
+                                    console.log(err.message)
+                                    const message = err.message
+                                    toast.error(message, {
+                                        position: "top-right",
+                                        autoClose: 2000,
+                                        hideProgressBar: false,
+                                        closeOnClick: true,
+                                        pauseOnHover: true,
+                                        draggable: true,
+                                        progress: undefined,
+                                        theme: "light",
+                                    });
                                 })
                         }}
                     >

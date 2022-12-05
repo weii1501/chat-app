@@ -157,7 +157,7 @@ const Preview: React.FC<Props> = ({
   });
   
   
-  statusSocket.onopen = event => console.log("Connected")
+  // statusSocket.onopen = event => console.log("Connected")
   
   statusSocket.onmessage = function(evet) {
     const status = JSON.parse(evet.data)
@@ -190,7 +190,7 @@ const Preview: React.FC<Props> = ({
  
   const username = JSON.parse(localStorage.getItem('user')||'').username
   
-  console.log(date)
+  // console.log(date)
 
   return (
     
@@ -364,7 +364,7 @@ const Preview: React.FC<Props> = ({
                       setInboxToggle(true);
                       setUsername(element.username);
                       // setFocus(!focus)
-                      console.log(e)
+                      // console.log(e)
                     }}
 
                   >

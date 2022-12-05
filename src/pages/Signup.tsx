@@ -159,6 +159,20 @@ const Signup: React.FC = () => {
           });
         }
       })
+      .catch((err) => {
+        console.log(err.message)
+        const message = err.message
+        toast.error(message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+      })
   }
 
   return (
